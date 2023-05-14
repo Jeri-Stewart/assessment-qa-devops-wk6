@@ -82,28 +82,27 @@ app.post("/api/duel", (req, res) => {
 
     // comparing the total health to determine a winner
     if (compHealth > playerHealth) {
-      prevLosses = playerRecord.losses // determine previous win record
-      prevWins = playerRecord.wins // determine previous loss record
+      prevLosses = playerRecord.losses; // determine previous win record
+      prevWins = playerRecord.wins; // determine previous loss record
       playerRecord.losses += 1;
       res.status(200).send("You lost!");
       // check if loss counter was added properly
-      if(prevLosses >= playerRecord.losses){ 
-        rollbar.debug("Losses record not counted")
+      if (prevLosses >= playerRecord.losses) {
+        rollbar.log("Losses record not counted");
       }
     } else {
       playerRecord.losses += 1;
       res.status(200).send("You won!");
       // check if wins counter was added properly
-      if(prevWins >= playerRecord.wins){ 
-        rollbar.debug("Wins record not counted")
+      if (prevWins >= playerRecord.wins) {
+        rollbar.log("Wins record not counted");
       }
     }
     rollbar.info("Player has completed a duel");
     // rollbar event to catch mismatched duel outcome
-  
   } catch (error) {
     console.log("ERROR DUELING", error);
-    //rollbar 
+    //rollbar
     res.sendStatus(400);
   }
 });
