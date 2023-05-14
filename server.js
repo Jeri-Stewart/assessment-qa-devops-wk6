@@ -64,6 +64,7 @@ app.get("/api/robots/shuffled", (req, res) => {
   try {
     let shuffled = shuffle(bots);
     res.status(200).send(shuffled);
+    rollbar.info("Robots shuffled properly");
   } catch (error) {
     console.error("ERROR GETTING SHUFFLED BOTS", error);
     res.sendStatus(400);
