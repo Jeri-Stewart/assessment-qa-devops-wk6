@@ -86,20 +86,11 @@ app.post("/api/duel", (req, res) => {
       prevWins = playerRecord.wins; // determine previous loss record
       playerRecord.losses += 1;
       res.status(200).send("You lost!");
-      // check if loss counter was added properly
-      if (prevLosses >= playerRecord.losses) {
-        rollbar.log("Losses record not counted");
-      }
     } else {
       playerRecord.losses += 1;
       res.status(200).send("You won!");
     }
     rollbar.info("Player has completed a duel");
-    // check if wins counter was added properly
-    if (prevWins >= playerRecord.wins) {
-      rollbar.log("Wins record not counted");
-    }
-    // rollbar event to catch mismatched duel outcome
   } catch (error) {
     console.log("ERROR DUELING", error);
     //rollbar
